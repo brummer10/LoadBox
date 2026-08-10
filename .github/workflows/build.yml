@@ -1,0 +1,132 @@
+name: build
+
+on:
+  push:
+env:
+  PAWPAW_SKIP_LV2: 1
+
+jobs:
+
+  source:
+    runs-on: ubuntu-22.04
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: distrho/dpf-makefile-action@v1
+        with:
+          target: source
+
+
+  linux-clap:
+    strategy:
+      matrix:
+        target: [linux-x86_64]
+    runs-on: ubuntu-22.04
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: distrho/dpf-makefile-action@v1
+        with:
+          target: ${{ matrix.target }}
+          suffix: -clap
+          extraargs: clap
+          lto: false
+          pawpaw: true
+
+  linux-vst2:
+    strategy:
+      matrix:
+        target: [linux-x86_64]
+    runs-on: ubuntu-22.04
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: distrho/dpf-makefile-action@v1
+        with:
+          target: ${{ matrix.target }}
+          suffix: -vst2
+          extraargs: vst2
+          lto: false
+          pawpaw: true
+
+  linux-vst3:
+    strategy:
+      matrix:
+        target: [linux-x86_64]
+    runs-on: ubuntu-22.04
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: distrho/dpf-makefile-action@v1
+        with:
+          target: ${{ matrix.target }}
+          suffix: -vst3
+          extraargs: vst3
+          lto: false
+          pawpaw: true
+
+  windows-clap:
+    strategy:
+      matrix:
+        target: [win64]
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: distrho/dpf-makefile-action@v1
+        with:
+          target: ${{ matrix.target }}
+          suffix: -clap
+          extraargs: clap
+          pawpaw: true
+
+  windows-vst2:
+    strategy:
+      matrix:
+        target: [win64]
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: distrho/dpf-makefile-action@v1
+        with:
+          target: ${{ matrix.target }}
+          suffix: -vst2
+          extraargs: vst2
+          pawpaw: true
+
+  windows-vst3:
+    strategy:
+      matrix:
+        target: [win64]
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: distrho/dpf-makefile-action@v1
+        with:
+          target: ${{ matrix.target }}
+          suffix: -vst3
+          extraargs: vst3
+          pawpaw: true
