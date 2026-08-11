@@ -169,7 +169,8 @@ bool NeuralModelLoader::loadModel() {
                 toStream.setup(1, 8196, modelSampleRate, fSampleRate);
                 needResample = 1;
             }
-            //model->Prewarm();
+            // model->Prewarm();
+
             int32_t size = 4096;
             int maxDelay = 512;
             float bestCorr = -1e30f;
@@ -184,8 +185,9 @@ bool NeuralModelLoader::loadModel() {
             }
 
             // process sine wave to calculate phase offset
-            for (int32_t processed = 0; processed < size; processed += maxBufferSize) {
-                int32_t chunk = std::min(maxBufferSize, size - processed);
+            int32_t step = maxBufferSize > 0 ? maxBufferSize : size;
+            for (int32_t processed = 0; processed < size; processed += step) {
+                int32_t chunk = std::min(step, size - processed);
                 model->Process(buffer + processed, outbuffer + processed, chunk);
             }
 
@@ -202,13 +204,14 @@ bool NeuralModelLoader::loadModel() {
             }
              // clear model
             memset(buffer, 0, size * sizeof(float));
-            for (int32_t processed = 0; processed < size; processed += maxBufferSize) {
-                int32_t chunk = std::min(maxBufferSize, size - processed);
+            for (int32_t processed = 0; processed < size; processed += step) {
+                int32_t chunk = std::min(step, size - processed);
                 model->Process(buffer + processed, outbuffer + processed, chunk);
             }
 
             delete[] buffer;
             delete[] outbuffer;
+            
             //fprintf(stderr, "phaseOffset = %i\n", phaseOffset);
             //fprintf(stderr, "sample rate = %i file = %i l = %f\n",fSampleRate, modelSampleRate, loudness);
             //fprintf(stderr, "%s\n", load_file.c_str());

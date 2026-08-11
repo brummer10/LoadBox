@@ -223,10 +223,10 @@ public:
         adj_set_value(ui->widget[1]->adj, engine.IRoutputGain1);
         adj_set_value(ui->widget[2]->adj, static_cast<float>(engine.conv.get_normalisation()));
         adj_set_value(ui->widget[3]->adj, static_cast<float>(engine.conv1.get_normalisation()));
-        adj_set_value(ui->widget[9]->adj, static_cast<float>(engine.bypass));
         adj_set_value(ui->widget[6]->adj, engine.IRmix);
         adj_set_value(ui->widget[7]->adj, engine.MasterOutGain);
         adj_set_value(ui->widget[8]->adj, static_cast<float>(engine.IRmode));
+        adj_set_value(ui->widget[9]->adj, static_cast<float>(engine.bypass));
     }
 
     // send value changes from GUI to the engine

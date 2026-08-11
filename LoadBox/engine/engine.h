@@ -255,7 +255,6 @@ inline void Engine::setIRFile(ConvolverSelector *co, std::string *file) {
         std::unique_lock<std::mutex> lk(WMutex);
         Sync.wait_for(lk, std::chrono::milliseconds(160));
     }
-
     co->cleanup();
     co->set_samplerate(s_rate);
     co->set_buffersize(bufsize);
@@ -282,6 +281,10 @@ inline void Engine::setIRFile(ConvolverSelector *co, std::string *file) {
 }
 
 void Engine::do_work_mono() {
+    if (bufsize > 0) {
+        slotC.setMaxBufferSize(bufsize * 2);
+        slotD.setMaxBufferSize(bufsize * 2);
+    }
     // set ir/nam files
     if (_cd.load(std::memory_order_acquire) == 1) {
         setIRFile(&conv, &ir_file);
@@ -291,9 +294,6 @@ void Engine::do_work_mono() {
         setIRFile(&conv, &ir_file);
         setIRFile(&conv1, &ir_file1);
     }
-
-    slotC.setMaxBufferSize(bufsize * 2);
-    slotD.setMaxBufferSize(bufsize * 2);
 
     _cd.store(0, std::memory_order_release);
     _notify_ui.store(true, std::memory_order_release);

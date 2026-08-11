@@ -79,8 +79,8 @@ public:
             width = static_cast<int>(irLoader.TopWin->width);
             height = static_cast<int>(irLoader.TopWin->height);
         } else {
-            width = 620;
-            height = 170;
+            width = 610;
+            height = 160;
         }
     }
 

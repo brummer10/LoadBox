@@ -262,7 +262,7 @@ void draw_ir_elem(void *w_, void* user_data) {
         w->width-20 * w->scale.rcscale_x * w->app->hdpi, w->height-20 * w->scale.rcscale_y * w->app->hdpi, 0.08);
     cairo_set_source_surface(w->crb, w->image, 0, 0);
     cairo_fill_preserve (w->crb);
-    shade_bg_color(w, 0.5, 0.1);
+    shade_bg_color(w, 0.5, 0.5);
     cairo_fill_preserve (w->crb);
     cairo_set_line_width(w->crb, 2);
     setFrameColour(w,  10 * w->scale.rcscale_x * w->app->hdpi, 10 * w->scale.rcscale_y * w->app->hdpi,
@@ -403,16 +403,6 @@ static void draw_window(void *w_, void* user_data) {
     cairo_move_to (w->crb, (w->scale.init_width*0.5)-tw, 42 * w->app->hdpi);
     cairo_text_path (w->crb, w->label);
     cairo_fill (w->crb);
-
-    cairo_move_to (w->crb, 10 * w->app->hdpi, 54 * w->app->hdpi);
-    cairo_line_to (w->crb, 600 * w->app->hdpi, 54 * w->app->hdpi);
-    cairo_set_source_rgba(w->crb, 0.33, 0.33, 0.33, 1);
-    cairo_stroke (w->crb);
-
-    cairo_move_to (w->crb, 10 * w->app->hdpi, 53 * w->app->hdpi);
-    cairo_line_to (w->crb, 600 * w->app->hdpi, 53 * w->app->hdpi);
-    cairo_set_source_rgba(w->crb, 0.01, 0.01, 0.01, 1);
-    cairo_stroke (w->crb);
 
     widget_reset_scale(w);
     cairo_new_path (w->crb);

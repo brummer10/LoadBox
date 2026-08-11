@@ -124,8 +124,8 @@ static void file_menu_callback(void *w_, void* user_data) {
 }
 
 void plugin_set_window_size(int *w,int *h,const char * plugin_uri) {
-    (*w) = 620; //set initial width of main window
-    (*h) = 170; //set initial height of main window (top bar + one rack unit)
+    (*w) = 610; //set initial width of main window
+    (*h) = 160; //set initial height of main window (top bar + one rack unit)
 }
 
 const char* plugin_set_name() {
@@ -159,7 +159,7 @@ void plugin_create_controller_widgets(X11_UI *ui, const char * plugin_uri) {
     ui->widget[9] = add_lv2_switch (ui->widget[9], ui->win, 14, "Enable", ui, 505,  12, 50, 50);
 
 // IR
-    ui->elem[0] = create_widget(&ui->main, ui->win, 10, 60, 600, 110);
+    ui->elem[0] = create_widget(&ui->main, ui->win, 5, 50, 600, 110);
     ui->elem[0]->parent_struct = ui;
     ui->elem[0]->label = "LoadBox";
     // rack mount background colour
